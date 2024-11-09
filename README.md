@@ -3,7 +3,7 @@
 **case-cs2** is a project for managing CS2 cases that speak accounting, spot pricing, statistics, and accounting.
 
 ## Functionality
-- **Case Accounting**: Manage CS:GO cases available on the market.
+- **Case Accounting**: Manage CS2 cases available on the market.
 - **Price update**: automatic update of the current market price of each pier.
 - **Statistics and accounting**: saving data on accounts, products and the total cost of cases.
 - **Account support**: the ability to add different accounts to store cases.
