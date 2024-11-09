@@ -1,37 +1,37 @@
 # case-cs2
 
-**case-cs2** — це проект для керування кейсами CS:GO, який допомагає в обліку, розрахунку актуальної ціни, статистиці та обліку акаунтів.
+**case-cs2** is a project for managing CS2 cases that speak accounting, spot pricing, statistics, and accounting.
 
-## Функціональність
-- **Облік кейсів**: керування кейсами CS:GO, доступними на ринку.
-- **Актуалізація цін**: автоматичне оновлення актуальної ринкової ціни кожного кейсу.
-- **Статистика та облік**: збереження даних по акаунтах, кількості та загальної вартості кейсів.
-- **Підтримка акаунтів**: можливість додавати різні акаунти для зберігання кейсів.
+## Functionality
+- **Case Accounting**: Manage CS:GO cases available on the market.
+- **Price update**: automatic update of the current market price of each pier.
+- **Statistics and accounting**: saving data on accounts, products and the total cost of cases.
+- **Account support**: the ability to add different accounts to store cases.
 
-## Налаштування проекту
+## Project settings
 
-### 1. Встановлення залежностей
-Проект підтримує встановлення через `npm` або `yarn`. Виберіть один із менеджерів пакетів:
+### 1. Installation of dependencies
+The project supports installation via `npm` or `yarn`. Choose one of the package managers:
 
-#### Використання npm:
+#### Using npm:
 ```
-npm install
+install npm
 ```
-#### Використання yarn:
+#### Use of yarn:
 ```
-yarn install
+set the yarn
 ```
-### 2. Запуск в режимі розробки з автоматичним перезавантаженням
+### 2. Run in development mode with automatic restart
 ```
-npm run serve
+npm run service
 ```
 ```
-yarn serve
+yarn to serve
 ```
-### 3. Запуск в режимі розробки з автоматичним перезавантаженням
+### 3. Start in development mode with automatic restart
 ```
 npm run build
 ```
 ```
-yarn build
+build a yarn
 ```
