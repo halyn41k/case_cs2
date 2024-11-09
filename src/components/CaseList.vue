@@ -33,7 +33,9 @@
         <tr>
           <th>ID</th>
           <th>Назва кейсу</th>
-          <th @click="sortCases('price')">Ціна</th>
+          <th @click="sortCases('price')">Ціна за одиницю</th>
+          <th>Кількість</th>
+          <th>Загальна ціна</th>
           <th>Дата додавання</th>
           <th>Акаунт</th>
           <th>Фото</th>
@@ -44,7 +46,9 @@
         <tr v-for="caseItem in sortedCases" :key="caseItem.id">
           <td>{{ caseItem.id }}</td>
           <td>{{ caseItem.case_name }}</td>
-          <td>{{ caseItem.price }}</td>
+          <td>{{ parseFloat(caseItem.price).toFixed(2) }}</td> <!-- Ціна за одиницю -->
+          <td>{{ caseItem.quantity }}</td> <!-- Кількість -->
+          <td>{{ (parseFloat(caseItem.price) * caseItem.quantity).toFixed(2) }}</td> <!-- Загальна ціна -->
           <td>{{ caseItem.date_added }}</td>
           <td>{{ caseItem.account_name }}</td>
           <td>
@@ -55,11 +59,11 @@
           </td>
         </tr>
         <tr>
-          <td colspan="7"><strong>Загальна сума: {{ totalPrice.toFixed(2) }}</strong></td>
+          <td colspan="9"><strong>Загальна сума: {{ totalPrice.toFixed(2) }}</strong></td>
         </tr>
       </tbody>
     </table>
-    <p v-else>No data available</p>
+    <p v-else>Дані відсутні</p>
     <p v-if="error">{{ error }}</p>
   </div>
 </template>
@@ -75,7 +79,7 @@ export default {
       filterMonth: '',
       filterCaseName: '',
       filterAccountName: '',
-      filteredCases: [] // Initialize as an empty array
+      filteredCases: []
     };
   },
   computed: {
@@ -97,9 +101,7 @@ export default {
       return [...new Set(this.cases.map(c => c.account_name))];
     },
     totalPrice() {
-      const total = this.filteredCases.reduce((sum, caseItem) => sum + parseFloat(caseItem.price), 0);
-      console.log("Total Price Computation: ", total); // Debugging log
-      return total;
+      return this.filteredCases.reduce((sum, caseItem) => sum + (parseFloat(caseItem.price) * caseItem.quantity), 0);
     }
   },
   created() {
@@ -111,15 +113,17 @@ export default {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            this.cases = data.cases;
-            this.filteredCases = this.cases; // Initialize filteredCases after fetching data
-            console.log("Fetched Cases: ", this.cases); // Debugging log
+            this.cases = data.cases.map(caseItem => ({
+              ...caseItem,
+              price: parseFloat(caseItem.price) || 0 // Перетворення price на число
+            }));
+            this.filteredCases = this.cases;
           } else {
             this.error = data.error;
           }
         })
         .catch(error => {
-          this.error = `Failed to fetch data: ${error.message}`;
+          this.error = `Не вдалося завантажити дані: ${error.message}`;
         });
     },
     deleteCase(id) {
@@ -139,7 +143,7 @@ export default {
         }
       })
       .catch(error => {
-        this.error = `Failed to delete case: ${error.message}`;
+        this.error = `Не вдалося видалити кейс: ${error.message}`;
       });
     },
     sortCases(key, ascending = true) {
@@ -153,7 +157,6 @@ export default {
         const matchesAccountName = this.filterAccountName ? caseItem.account_name === this.filterAccountName : true;
         return matchesMonth && matchesCaseName && matchesAccountName;
       });
-      console.log("Filtered Cases: ", this.filteredCases); // Debugging log
     }
   }
 };
@@ -180,7 +183,7 @@ img {
 }
 
 button {
-  font-family: inherit; /* Ensure button uses the same font as the text */
+  font-family: inherit;
   margin: 5px;
 }
 
