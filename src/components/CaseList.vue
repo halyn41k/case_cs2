@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     fetchCases() {
-      fetch('http://localhost/case-cs2/backend/server.php')
+      fetch('http://cases2.ct.ws/api.php')
         .then(response => response.json())
         .then(data => {
           if (data.success) {
@@ -127,7 +127,7 @@ export default {
         });
     },
     deleteCase(id) {
-      fetch('http://localhost/case-cs2/backend/server.php', {
+      fetch('http://cases2.ct.ws/api.php', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

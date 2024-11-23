@@ -1,19 +1,22 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:8080");
+// Дозволяє доступ до ресурсів з вашого фронтенду
+header("Access-Control-Allow-Origin: http://cases2.ct.ws"); // Вказати правильний домен
 header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=UTF-8");
 
+// Якщо це запит типу OPTIONS (попередній запит), просто відповідаємо статусом 200
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
 
-$host = 'localhost';
-$dbname = 'case_cs2';
-$username = 'root';
-$password = 'BABYSHKA';
+// Налаштування підключення до бази даних на InfinityFree
+$host = 'sql205.infinityfree.com';
+$dbname = 'if0_37682234_case_cs2';
+$username = 'if0_37682234';
+$password = 'Z2GJ6lzY2mlg';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -64,7 +67,6 @@ try {
             $total_price = $price * $quantity;
             $date_added = date('Y-m-d');
 
-            // Отримання імені акаунту за його ID
             $stmt = $pdo->prepare("SELECT name FROM accounts WHERE id = ?");
             $stmt->execute([$account_id]);
             $account_name = $stmt->fetchColumn();
@@ -74,7 +76,6 @@ try {
                 exit;
             }
 
-            // Встановлення шляху до фото в залежності від назви кейсу
             $photoPaths = [
                 'Футляр «Сновидіння та кошмари»' => 'case-cs2/src/assets/grozy.png',
                 'Футляр «Кіловат»' => 'case-cs2/src/assets/kilovat.png',
@@ -91,7 +92,6 @@ try {
 
             $photoPath = $photoPaths[$case_name];
 
-            // Додавання кейсу з обчисленням загальної ціни
             $stmt = $pdo->prepare("INSERT INTO cases (account_id, account_name, case_name, price, quantity, total_price, date_added, photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$account_id, $account_name, $case_name, $price, $quantity, $total_price, $date_added, $photoPath]);
 

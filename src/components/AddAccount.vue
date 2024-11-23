@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     fetchAccounts() {
-      fetch('http://localhost/case-cs2/backend/server.php?fetch=accounts')
+      fetch('http://cases2.ct.ws/api.php')
         .then(response => response.json())
         .then(data => {
           if (data.success) {
@@ -77,7 +77,7 @@ export default {
         email: this.email,
         password: this.password
       };
-      fetch('http://localhost/case-cs2/backend/server.php', {
+      fetch('http://cases2.ct.ws/api.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

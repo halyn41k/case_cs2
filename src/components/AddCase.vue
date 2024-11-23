@@ -96,7 +96,7 @@ export default {
   methods: {
     async addCase() {
       try {
-        const response = await fetch('http://localhost/case-cs2/backend/server.php', {
+        const response = await fetch('http://cases2.ct.ws/api.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -121,7 +121,7 @@ export default {
     },
     async fetchAccounts() {
       try {
-        const response = await fetch('http://localhost/case-cs2/backend/server.php?fetch=accounts');
+        const response = await fetch('http://cases2.ct.ws/api.php?fetch=accounts');
         const data = await response.json();
         if (data.success) {
           this.accounts = data.accounts;
@@ -151,7 +151,7 @@ export default {
 
       try {
         const response = await fetch(
-          `http://localhost/case-cs2/backend/price.php?market_hash_name=${encodeURIComponent(marketName)}`
+          `http://cases2.ct.ws/api_price.php?market_hash_name=${encodeURIComponent(marketName)}`
         );
         const data = await response.json();
 
